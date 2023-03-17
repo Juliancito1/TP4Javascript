@@ -5,11 +5,11 @@ let auto = {
     encendido: false,
 
     encender(){
-        auto.encendido=true;
+        this.encendido=true;
         console.log("El auto está encendido")
     },
     apagar(){
-        auto.encendido=false;
+        this.encendido=false;
         console.log("El auto está apagado")
     }
 }
