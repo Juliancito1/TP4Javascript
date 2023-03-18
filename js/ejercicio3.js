@@ -16,6 +16,16 @@ class Rectangulo{
         this.ancho=valor
     }
 
+    mostrarAltura()
+    {
+        return console.log(`La altura es de: ${this.altura} cm `);
+    }
+
+    mostrarAncho()
+    {
+        return console.log(`El ancho es de: ${this.ancho} cm`)
+    }
+
     calcularArea()
     {
        return console.log(`El área del rectángulo es: ${this.altura * this.ancho} cm`);
