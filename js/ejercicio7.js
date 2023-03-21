@@ -16,47 +16,65 @@ huecosLibres(): indica cuántos contactos más podemos ingresar.
 
 Crea un menú con opciones por consola para probar todas estas funcionalidades. */
 
-class Contacto{
-    #nombre
-    #telefono
-    constructor(nombre,telefono)
+class AgendaContactos{
+    #contactos
+    #limiteContacto
+    constructor(contactos)
     {
-        this.#nombre=nombre;
-        this.#telefono=telefono;
+        this.#contactos = contactos;
+        this.#limiteContacto=10;
     }
 
-    get nombre(){
-        return this.#nombre
+    get contactos(){
+        return this.#contactos
     }
 
-    set nombre(newNombre){
-        this.#nombre=newNombre;
+    set contactos(newContacto){
+        this.#contactos=newContacto;
     }
 
-    get telefono(){
-        return this.#telefono
-    }
-
-    set telefono(newtelefono){
-        this.#telefono=newtelefono;
+    get limiteContacto(){
+        return this.#limiteContacto
     }
 
     aniadirContacto(contacto){
-        let contactos = []
-        contactos.push(contacto);
+        this.#contactos.push(contacto);
     }
     existeContacto(contacto){
-        contactos.includes(contacto)
+        const aux = this.#contactos.filter(cont => cont.nombre === contacto.nombre)
+        console.log(aux.length)
+        if(aux.length !== 0){
+            document.write("El contacto existe")
+        }
+        else
+        {
+            document.write("El contacto no existe")
+        }
     }
     listarContactos(){
+        for(let i=0;i<this.#contactos.length;i++)
+        {
         document.write(`
         <ul>
-        <li>Nombre: ${this.#nombre}</li>
-        <li>Telefono: ${this.#telefono}</li>
+        <li>Nombre: ${this.#contactos[i].nombre}</li>
+        <li>Telefono: ${this.#contactos[i].telefono}</li>
         </ul>`)
+        }
     }
+    buscarContacto(nombre){
+        const aux = this.#contactos.filter(cont => cont.nombre === nombre)
+        console.log(aux.length)
+        if(aux.length !== 0){
+            document.write(`El telefono es: ${aux[0].telefono}`)
+        }
+        else
+        {
+            document.write("El contacto no existe")
+        }
+    }
+    //eliminarContacto(Contacto c){}
+    //agendaLlena(){}
+    //huecosLibres(){}
 }
 
-let contacto1 = new Contacto("Julian",3814322438)
-contacto1.aniadirContacto(contacto1);
-
+let contacto1 = new AgendaContactos([{nombre: "Julian", telefono: 38142314},{nombre: "Jose", telefono: 38123456}])
