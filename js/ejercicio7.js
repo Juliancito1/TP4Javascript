@@ -38,17 +38,23 @@ class AgendaContactos{
     }
 
     aniadirContacto(contacto){
+        if(this.#contactos.length < this.#limiteContacto)
+        {
         this.#contactos.push(contacto);
+        }
+        else{
+            document.write("<p>La agenda esta llena, no se pueden agregar más contactos</p>")
+        }
     }
     existeContacto(contacto){
         const aux = this.#contactos.filter(cont => cont.nombre === contacto.nombre)
         console.log(aux.length)
         if(aux.length !== 0){
-            document.write("El contacto existe")
+            document.write("<p>El contacto existe</p>")
         }
         else
         {
-            document.write("El contacto no existe")
+            document.write("<p>El contacto no existe</p>")
         }
     }
     listarContactos(){
@@ -65,16 +71,46 @@ class AgendaContactos{
         const aux = this.#contactos.filter(cont => cont.nombre === nombre)
         console.log(aux.length)
         if(aux.length !== 0){
-            document.write(`El telefono es: ${aux[0].telefono}`)
+            document.write(`<p>El telefono es: ${aux[0].telefono}</p>`)
         }
         else
         {
-            document.write("El contacto no existe")
+            document.write("<p>El contacto no existe</p>")
         }
     }
-    //eliminarContacto(Contacto c){}
-    //agendaLlena(){}
-    //huecosLibres(){}
+    eliminarContacto(nombre){
+        const aux = this.#contactos.findIndex(cont => cont.nombre === nombre)
+        console.log(aux)
+        if(aux){
+            this.#contactos.splice(aux,1)
+        }
+        else
+        {
+            document.write("<p>El contacto no existe</p>")
+        }
+    }
+    agendaLlena(){
+        if(this.#contactos.length > this.#limiteContacto)
+        {
+            document.write("<p>La agenda esta llena</p>")
+        }
+        else{
+            document.write("<p>La agenda no esta llena</p>")
+        }
+    }
+    huecosLibres(){
+        const calculo = this.#limiteContacto - this.#contactos.length
+        if(calculo > 0)
+        {
+            document.write(`<p>La agenda tiene ${calculo} huecos libres</p>`) 
+        
+        }
+        else{
+            document.write(`<p>La agenda no tiene huecos libres</p>`) 
+        }
+    }
 }
 
-let contacto1 = new AgendaContactos([{nombre: "Julian", telefono: 38142314},{nombre: "Jose", telefono: 38123456}])
+let contacto1 = new AgendaContactos([{nombre: "Julian", telefono: 38142314},{nombre: "Jose", telefono: 38123456},{nombre: "Roberto", telefono:381452832}])
+
+
