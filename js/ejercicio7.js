@@ -41,76 +41,115 @@ class AgendaContactos{
         if(this.#contactos.length < this.#limiteContacto)
         {
         this.#contactos.push(contacto);
+        console.log("Contacto agregado")
         }
         else{
-            document.write("<p>La agenda esta llena, no se pueden agregar más contactos</p>")
+            console.log("<p>La agenda esta llena, no se pueden agregar más contactos</p>")
         }
     }
-    existeContacto(contacto){
-        const aux = this.#contactos.filter(cont => cont.nombre === contacto.nombre)
-        console.log(aux.length)
-        if(aux.length !== 0){
-            document.write("<p>El contacto existe</p>")
+    existeContacto(buscarContacto){
+        let aux = this.#contactos.find(cont => cont.nombre.includes(buscarContacto))
+        if(aux !== undefined){
+            console.log("<p>El contacto existe</p>")
         }
         else
         {
-            document.write("<p>El contacto no existe</p>")
+            console.log("<p>El contacto no existe</p>")
         }
     }
     listarContactos(){
         for(let i=0;i<this.#contactos.length;i++)
         {
-        document.write(`
-        <ul>
-        <li>Nombre: ${this.#contactos[i].nombre}</li>
-        <li>Telefono: ${this.#contactos[i].telefono}</li>
-        </ul>`)
+            console.log(`Mostrando Contacto ${i+1}
+        Nombre: ${this.#contactos[i].nombre}
+        Telefono: ${this.#contactos[i].telefono}
+        `)
         }
     }
     buscarContacto(nombre){
         const aux = this.#contactos.filter(cont => cont.nombre === nombre)
-        console.log(aux.length)
         if(aux.length !== 0){
-            document.write(`<p>El telefono es: ${aux[0].telefono}</p>`)
+            console.log(`<p>El telefono del contacto ${aux[0].nombre} es: ${aux[0].telefono}</p>`)
         }
         else
         {
-            document.write("<p>El contacto no existe</p>")
+            console.log("<p>El contacto no existe</p>")
         }
     }
     eliminarContacto(nombre){
         const aux = this.#contactos.findIndex(cont => cont.nombre === nombre)
-        console.log(aux)
         if(aux){
             this.#contactos.splice(aux,1)
+            console.log("Contacto eliminado")
         }
         else
         {
-            document.write("<p>El contacto no existe</p>")
+            console.log("<p>El contacto no existe</p>")
         }
     }
     agendaLlena(){
         if(this.#contactos.length > this.#limiteContacto)
         {
-            document.write("<p>La agenda esta llena</p>")
+            console.log("<p>La agenda esta llena</p>")
         }
         else{
-            document.write("<p>La agenda no esta llena</p>")
+            console.log("<p>La agenda no esta llena</p>")
         }
     }
     huecosLibres(){
         const calculo = this.#limiteContacto - this.#contactos.length
         if(calculo > 0)
         {
-            document.write(`<p>La agenda tiene ${calculo} huecos libres</p>`) 
+            console.log(`<p>La agenda tiene ${calculo} huecos libres</p>`) 
         
         }
         else{
-            document.write(`<p>La agenda no tiene huecos libres</p>`) 
+            console.log(`<p>La agenda no tiene huecos libres</p>`) 
         }
     }
 }
 
-let contacto1 = new AgendaContactos([{nombre: "Julian", telefono: 38142314},{nombre: "Jose", telefono: 38123456},{nombre: "Roberto", telefono:381452832}])
+let agenda1 = new AgendaContactos([{nombre: "Julian", telefono: 38142314},{nombre: "Jose", telefono: 38123456},{nombre: "Roberto", telefono:381452832}])
 
 
+alert("Bienvenido a su agenda de contactos")
+
+do{
+let opcion = parseInt(prompt(`Ingrese el numero (1 al 7) según lo que quiera realizar con su agenda
+1-Agregar Contacto a la agenda
+2-Verificar si existe un contacto en la agenda segun su nombre
+3-Mostrar Contactos
+4-Buscar el telefono de un contacto segun su nombre
+5-Eliminar un contacto
+6-Consultar si la agenda esta llena
+7-Consultar cuantos huecos libres tiene la agenda`))
+
+
+switch(opcion)
+{
+    
+    case 1: 
+        agenda1.aniadirContacto({nombre: prompt("Ingrese el nombre del contacto"), telefono: parseInt(prompt("Ingrese el telefono del contacto"))})
+    break;
+    case 2:
+        let nombre = prompt("Ingrese el nombre del contacto")
+        agenda1.existeContacto(nombre)
+    break;
+    case 3:
+        agenda1.listarContactos()
+    break;
+    case 4:
+        agenda1.buscarContacto(prompt("Ingrese el nombre del contacto"))
+    break;
+    case 5:
+        agenda1.eliminarContacto(prompt("Ingrese el nombre del contacto a eliminar"))
+    break;
+    case 6:
+        agenda1.agendaLlena()
+    break;
+    case 7:
+        agenda1.huecosLibres()
+    break;
+    default:
+        console.log("No ingreso una opcion correcta")
+}}while(confirm("¿Desea seguir modificando su agenda o elegir una opcion valida?"));
