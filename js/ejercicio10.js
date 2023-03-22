@@ -5,10 +5,11 @@
 
 class Aeropuerto{
     #nombreAeropuerto
+    #listaAviones
     constructor(nombreAeropuerto,listaAviones)
     {
         this.#nombreAeropuerto=nombreAeropuerto;
-        this.listaAviones=[]
+        this.#listaAviones=listaAviones
     }
     
     get nombreAeropuerto()
@@ -21,75 +22,55 @@ class Aeropuerto{
         this.#nombreAeropuerto = newnombreAeropuerto;
     }
 
+    get listaAviones()
+    {
+        return this.#listaAviones
+    }
+
+    set listaAviones(newListaAviones)
+    {
+        this.#listaAviones=newListaAviones;
+    }
+
     agregarAvion(avion)
     {
-        this.listaAviones.push(avion);
+        this.#listaAviones.push(avion);
     }
 
-    buscarAvion(avion)
+    buscarAvion(nombre)
     {
-        if(avion)
+        const aux = this.#listaAviones.filter(avi => avi.nombre === nombre)
+        console.log(aux.length)
+        if(aux.length !== 0){
+            document.write(`<p>Nombre del Avion: ${aux[0].nombre}</p>`)
+            document.write(`<p>La capacidad del Avion es para: ${aux[0].capacidad} pasajeros</p>`)
+            document.write(`<p>Destino del avion: ${aux[0].destino}</p>`)
+            document.write(`<p>Lista de pasajeros: ${aux[0].listaPasajeros}</p>`)
+        }
+        else
         {
-            document.write(`${this}`)
+            document.write("<p>El avion ingresado no existe no existe</p>")
+        }
+    }
+
+    abordar(nombre,pasajeros)
+    {
+        const aux = this.#listaAviones.findIndex(avi => avi.nombre == nombre)
+        console.log(aux)
+        if(aux >= 0)
+        {
+            if(pasajeros < this.#listaAviones[aux].capacidad && this.#listaAviones[aux].listaPasajeros < this.#listaAviones[aux].capacidad)
+            {
+                this.#listaAviones[aux].listaPasajeros += pasajeros
+                document.write("Pasajeros Abordando")
+            }
+            else{
+                document.write("El Avión esta lleno")
+            }
         }
     }
 }
 
-class Avion extends Aeropuerto{
-    #nombreAvion
-    #destino
-    #listaPasajeros
-    constructor(nombreAvion,capacidad,destino,listaPasajeros)
-    {
-        this.#nombreAvion=nombreAvion;
-        this.capacidad=capacidad;
-        this.#destino=destino;
-        this.#listaPasajeros=listaPasajeros
-    }
+let aeropuerto1 = new Aeropuerto("Aeropuerto Internacional",[{nombre: "Boeing 747",capacidad: 426, destino: "New York, Estados Unidos",listaPasajeros: 200}, {nombre: "Boeing 748",capacidad: 400, destino: "Rio de Janeiro, Brasil",listaPasajeros: 250}, {nombre: "Boeing 749",capacidad: 350, destino: "Madrid, España",listaPasajeros: 100}])
 
-    get nombreAvion()
-    {
-        return this.#nombreAvion
-    }
 
-    set nombreAvion(newNombreAvion)
-    {
-        this.#nombreAvion=newNombreAvion
-    }
-
-    getCapacidad()
-    {
-        return this.capacidad;
-    }
-    setCapacidad(newCapacidad)
-    {
-        this.capacidad=newCapacidad;
-    }
-    get destino()
-    {
-        return this.#destino;
-    }
-
-    set destino(newDestino)
-    {
-        this.#destino=newDestino;
-    }
-
-    get listaPasajeros()
-    {
-        return this.#listaPasajeros
-    }
-
-    set listaPasajeros(newListaPasajeros)
-    {
-        this.#listaPasajeros=newListaPasajeros
-    }
-
-    abordar(cantidad){
-        if(cantidad <= this.capacidad)
-        {
-            
-        }
-    }
-
-}
